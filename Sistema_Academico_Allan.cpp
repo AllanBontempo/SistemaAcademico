@@ -10,22 +10,25 @@ MATRICULA 202002709316
 
 using namespace std;
 int pesquisarMatricula(int proximaPosicaoVagaNosVetores, int matricula);
-int vetMatricula[100];
+
+struct Alunos
+{
+    string nome;
+    int matricula;
+    char sexo;
+    bool matriculado;
+    int celular;
+    char turma;
+};
+
+Alunos alunos[100];
 
 int main()
 {
 
     setlocale(LC_ALL, "Portuguese"); // Configura o sistema para aceitar acentuacoes em Portugues
 
-    string vetNome[100];
-    int vetCelular[100];
-    char vetSexo[100];
-    bool vetMatriculado[100];
-    char vetTurma[100];
     char turma;
-    int lengthTurma = sizeof(vetTurma) / sizeof(vetTurma[0]);
-    int lengthNome = sizeof(vetNome) / sizeof(vetNome[0]);
-
     int matricula;
     bool pesquisaBemSucedida = false;
     int posicaoLocalizada;
@@ -41,26 +44,26 @@ int main()
     int submenu;
     int proximaPosicaoVagaNosVetores = 0;
 
-    vetMatricula[0] = 11;
-    vetNome[0] = "Joao";
-    vetSexo[0] = 'M';
-    vetCelular[0] = 9999;
-    vetMatriculado[0] = true;
-    vetTurma[0] = 'A';
+    alunos[0].matricula = 11;
+    alunos[0].nome = "Joao";
+    alunos[0].sexo = 'M';
+    alunos[0].celular = 9999;
+    alunos[0].matriculado = true;
+    alunos[0].turma = 'A';
     proximaPosicaoVagaNosVetores++;
 
-    vetMatricula[1] = 22;
-    vetNome[1] = "Maria";
-    vetSexo[1] = 'F';
-    vetCelular[1] = 8888;
-    vetMatriculado[1] = false;
+    alunos[1].matricula = 22;
+    alunos[1].nome = "Maria";
+    alunos[1].sexo = 'F';
+    alunos[1].celular = 8888;
+    alunos[1].matriculado = false;
     proximaPosicaoVagaNosVetores++;
 
-    vetMatricula[2] = 33;
-    vetNome[2] = "Carla";
-    vetSexo[2] = 'F';
-    vetCelular[2] = 7777;
-    vetMatriculado[2] = false;
+    alunos[2].matricula = 33;
+    alunos[2].nome = "Carla";
+    alunos[2].sexo = 'F';
+    alunos[2].celular = 7777;
+    alunos[2].matriculado = false;
     proximaPosicaoVagaNosVetores++;
 
     do
@@ -115,14 +118,14 @@ int main()
                     }
                     else
                     {
-                        vetMatricula[proximaPosicaoVagaNosVetores] = matricula;
+                        alunos[proximaPosicaoVagaNosVetores].matricula = matricula;
                         cout << "Informe o nome.....: ";
-                        cin >> vetNome[proximaPosicaoVagaNosVetores];
+                        cin >> alunos[proximaPosicaoVagaNosVetores].nome;
                         cout << "Informe o sexo.....: ";
-                        cin >> vetSexo[proximaPosicaoVagaNosVetores];
+                        cin >> alunos[proximaPosicaoVagaNosVetores].sexo;
                         cout << "Informe o celular..: ";
-                        cin >> vetCelular[proximaPosicaoVagaNosVetores];
-                        vetMatriculado[proximaPosicaoVagaNosVetores] = false;
+                        cin >> alunos[proximaPosicaoVagaNosVetores].celular;
+                        alunos[proximaPosicaoVagaNosVetores].matriculado = false;
                         proximaPosicaoVagaNosVetores++;
                     }
                     break;
@@ -144,13 +147,13 @@ int main()
 
                     if (pesquisaMatricula != -1)
                     {
-                        cout << "Informe os novos dados para o(a) aluno(a): " << vetNome[pesquisaMatricula] << endl;
+                        cout << "Informe os novos dados para o(a) aluno(a): " << alunos[pesquisaMatricula].nome << endl;
                         cout << "Informe o nome.....: ";
-                        cin >> vetNome[pesquisaMatricula];
+                        cin >> alunos[pesquisaMatricula].nome;
                         cout << "Informe o sexo.....: ";
-                        cin >> vetSexo[pesquisaMatricula];
+                        cin >> alunos[pesquisaMatricula].sexo;
                         cout << "Informe o celular..: ";
-                        cin >> vetCelular[pesquisaMatricula];
+                        cin >> alunos[pesquisaMatricula].celular;
                     }
                     else
                     {
@@ -176,8 +179,8 @@ int main()
 
                     if (pesquisaMatricula != -1)
                     {
-                        vetMatricula[pesquisaMatricula] = 0;
-                        cout << vetNome[pesquisaMatricula] << " foi excluido(a)!\n";
+                        alunos[pesquisaMatricula].matricula = 0;
+                        cout << alunos[pesquisaMatricula].nome << " foi excluido(a)!\n";
                         system("pause");
                     }
                     else
@@ -204,14 +207,14 @@ int main()
 
                     if (pesquisaMatricula != -1)
                     {
-                        cout << "Matricula...: " << vetMatricula[pesquisaMatricula] << endl;
-                        cout << "Nome........: " << vetNome[pesquisaMatricula] << endl;
-                        cout << "Sexo........: " << vetSexo[pesquisaMatricula] << endl;
-                        cout << "Celular.....: " << vetCelular[pesquisaMatricula] << endl;
-                        cout << "Matriculado?: " << ((vetMatriculado[pesquisaMatricula]) ? "Sim\n" : "Nao\n");
-                        if (vetMatriculado[pesquisaMatricula])
+                        cout << "Matricula...: " << alunos[pesquisaMatricula].matricula << endl;
+                        cout << "Nome........: " << alunos[pesquisaMatricula].nome << endl;
+                        cout << "Sexo........: " << alunos[pesquisaMatricula].sexo << endl;
+                        cout << "Celular.....: " << alunos[pesquisaMatricula].celular << endl;
+                        cout << "Matriculado?: " << ((alunos[pesquisaMatricula].matriculado) ? "Sim\n" : "Nao\n");
+                        if (alunos[pesquisaMatricula].matriculado)
                         {
-                            cout << "Turma.......: " << vetTurma[pesquisaMatricula] << endl;
+                            cout << "Turma.......: " << alunos[pesquisaMatricula].turma << endl;
                         }
                         system("pause");
                     }
@@ -227,13 +230,13 @@ int main()
                     cout << "CONSULTAR ALUNOS\n\n";
                     for (int i = 0; i < proximaPosicaoVagaNosVetores; i++)
                     {
-                        if (vetMatricula[i] != 0)
+                        if (alunos[i].matricula != 0)
                         {
                             cout << "<" << i << "> ";
-                            cout << vetMatricula[i] << "\t";
-                            cout << vetNome[i] << "\t";
-                            cout << vetSexo[i] << "\t";
-                            cout << vetCelular[i] << "\n";
+                            cout << alunos[i].matricula << "\t";
+                            cout << alunos[i].nome << "\t";
+                            cout << alunos[i].sexo << "\t";
+                            cout << alunos[i].celular << "\n";
                         }
                     }
                     system("pause");
@@ -256,9 +259,9 @@ int main()
 
                     if (pesquisaMatricula != -1)
                     {
-                        cout << "Informe a turma do(a) " << vetNome[pesquisaMatricula] << ": ";
-                        cin >> vetTurma[pesquisaMatricula];
-                        vetMatriculado[pesquisaMatricula] = true;
+                        cout << "Informe a turma do(a) " << alunos[pesquisaMatricula].nome << ": ";
+                        cin >> alunos[pesquisaMatricula].turma;
+                        alunos[pesquisaMatricula].matriculado = true;
                         system("pause");
                     }
                     else
@@ -295,10 +298,10 @@ int main()
                     cin >> turma;
                     for (int i = 0; i < proximaPosicaoVagaNosVetores; i++)
                     {
-                        if (turma == vetTurma[i])
+                        if (turma == alunos[i].turma)
                         {
-                            cout << "Voce esta na turma '" << vetTurma[i] << "'\n";
-                            cout << "Aluno(a):  " << vetNome[i] << "\n";
+                            cout << "Voce esta na turma '" << alunos[i].turma << "'\n";
+                            cout << "Aluno(a):  " << alunos[i].nome << "\n";
                             mtzNotas[i][3] = 0.0;
                             for (int c = 0; c < 3; c++)
                             {
@@ -309,14 +312,14 @@ int main()
                             }
                             mtzNotas[i][3] /= 3;
 
-                            cout << "A media de " << vetNome[i] << " e: " << mtzNotas[i][3] << "\n";
+                            cout << "A media de " << alunos[i].nome << " e: " << mtzNotas[i][3] << "\n";
                             if (mtzNotas[i][3] < 7)
                             {
-                                cout << vetNome[i] << " foi reprovado! \n\n";
+                                cout << alunos[i].nome << " foi reprovado! \n\n";
                             }
                             else
                             {
-                                cout << vetNome[i] << " foi aprovado! \n\n";
+                                cout << alunos[i].nome << " foi aprovado! \n\n";
                             }
                             system("pause");
                         }
@@ -342,7 +345,7 @@ int main()
                     mtzNotas[pesquisaMatricula][3] = 0.0;
                     if (pesquisaMatricula != -1)
                     {
-                        cout << "Aluno(a):  " << vetNome[pesquisaMatricula] << "\n";
+                        cout << "Aluno(a):  " << alunos[pesquisaMatricula].nome << "\n";
                         for (int c = 0; c < 3; c++)
                         {
                             cout << "Digite a nota AV" << c + 1 << ":  ";
@@ -352,15 +355,15 @@ int main()
                         }
                         mtzNotas[pesquisaMatricula][3] /= 3;
 
-                        cout << "A media de " << vetNome[pesquisaMatricula] << " e: " << mtzNotas[pesquisaMatricula][3] << "\n";
+                        cout << "A media de " << alunos[pesquisaMatricula].nome << " e: " << mtzNotas[pesquisaMatricula][3] << "\n";
                         if (mtzNotas[pesquisaMatricula][3] < 7)
                         {
-                            cout << vetNome[pesquisaMatricula] << " foi reprovado! \n\n";
+                            cout << alunos[pesquisaMatricula].nome << " foi reprovado! \n\n";
                             system("pause");
                         }
                         else
                         {
-                            cout << vetNome[pesquisaMatricula] << " foi aprovado! \n\n";
+                            cout << alunos[pesquisaMatricula].nome << " foi aprovado! \n\n";
                             system("pause");
                         }
                         break;
@@ -388,13 +391,13 @@ int main()
                     } while (matricula == 0);
 
                     int pesquisaMatricula = pesquisarMatricula(proximaPosicaoVagaNosVetores, matricula);
-                   
+
                     mtzNotas[pesquisaMatricula][3] = 0.0;
                     if (pesquisaMatricula != -1)
                     {
 
                         cout << endl;
-                        cout << "Aluno(a):  " << vetNome[pesquisaMatricula] << "\n";
+                        cout << "Aluno(a):  " << alunos[pesquisaMatricula].nome << "\n";
                         for (int i = 0; i < 3; i++)
                         {
                             cout << "A nota AV" << i + 1 << " e: " << mtzNotas[pesquisaMatricula][i] << "\n";
@@ -439,14 +442,14 @@ int main()
                             cout << "Matricula invalida!!!\n";
                         }
                     } while (matricula == 0);
-                    int pesquisaMatricula = pesquisarMatricula(proximaPosicaoVagaNosVetores, matricula);                   
+                    int pesquisaMatricula = pesquisarMatricula(proximaPosicaoVagaNosVetores, matricula);
                     mtzNotas[pesquisaMatricula][3] = 0.0;
 
                     if (pesquisaMatricula != -1)
                     {
 
                         cout << endl;
-                        cout << "Aluno(a):  " << vetNome[pesquisaMatricula] << "\n";
+                        cout << "Aluno(a):  " << alunos[pesquisaMatricula].nome << "\n";
                         for (int i = 0; i < 3; i++)
                         {
                             cout << "A nota AV" << i + 1 << " e: " << mtzNotas[pesquisaMatricula][i] << "\n";
@@ -543,11 +546,40 @@ int main()
                 case 1:
                 {
                     cout << "RELACAO DE ALUNOS APROVADOS\n\n";
+                    for (int i = 0; i < proximaPosicaoVagaNosVetores; i++)
+                    {
+                        if (mtzNotas[i][3] >= 7)
+                        {
+                            cout << alunos[i].nome << " foi aprovado com a media " << mtzNotas[i][3] << endl;
+                        }
+                        else
+                        {
+                            cout << "Nenhum aluno foi aprovado\n\n";
+                            break;
+                        }
+                    }
+                    system("pause");
+
                     break;
                 }
                 case 2:
                 {
                     cout << "RELACAO DE ALUNOS REPROVADOS\n\n";
+
+                    for (int i = 0; i < proximaPosicaoVagaNosVetores; i++)
+                    {
+                        if (mtzNotas[i][3] < 7)
+                        {
+                            cout << alunos[i].nome << " foi reprovado com a media " << mtzNotas[i][3] << endl;
+                        }
+                        else
+                        {
+                            cout << "Nenhum aluno foi reprovado\n\n";
+                            break;
+                        }
+                    }
+                    system("pause");
+
                     break;
                 }
                 case 3:
@@ -569,12 +601,11 @@ int main()
     return 0;
 }
 
-
 int pesquisarMatricula(int proximaPosicaoVagaNosVetores, int matricula)
 {
     for (int i = 0; i < proximaPosicaoVagaNosVetores; i++)
     {
-        if (vetMatricula[i] == matricula)
+        if (alunos[i].matricula == matricula)
         {
             return i;
         }
