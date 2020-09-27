@@ -10,6 +10,8 @@ MATRICULA 202002709316
 
 using namespace std;
 int pesquisarMatricula(int proximaPosicaoVagaNosVetores, int matricula);
+bool validarNota(bool notaValida, int AV);
+void mostrarNotas(int pesquisaMatricula);
 
 struct Alunos
 {
@@ -22,6 +24,7 @@ struct Alunos
 };
 
 Alunos alunos[100];
+float mtzNotas[100][4]; // linha 0 -> AV1, linha 1 -> AV2, linha 2 -> AV3, linha 3 -> mediaFinal
 
 int main()
 {
@@ -34,7 +37,6 @@ int main()
     int posicaoLocalizada;
 
     int vetFaltas[100];
-    float mtzNotas[100][4]; // linha 0 -> AV1, linha 1 -> AV2, linha 2 -> AV3, linha 3 -> mediaFinal
     float AV1;
     float AV2;
     float AV3;
@@ -303,25 +305,34 @@ int main()
                             cout << "Voce esta na turma '" << alunos[i].turma << "'\n";
                             cout << "Aluno(a):  " << alunos[i].nome << "\n";
                             mtzNotas[i][3] = 0.0;
+                            bool notaValida = false;
                             for (int c = 0; c < 3; c++)
                             {
                                 cout << "Digite a nota AV" << c + 1 << ":  ";
                                 cin >> AV;
-                                mtzNotas[i][c] = AV;
-                                mtzNotas[i][3] += AV;
+                                notaValida = validarNota(notaValida, AV);
+
+                                if (notaValida == false)
+                                {
+
+                                    mtzNotas[i][c] = AV;
+                                    mtzNotas[i][3] += AV;
+                                }
                             }
                             mtzNotas[i][3] /= 3;
-
-                            cout << "A media de " << alunos[i].nome << " e: " << mtzNotas[i][3] << "\n";
-                            if (mtzNotas[i][3] < 7)
+                            if (notaValida == false)
                             {
-                                cout << alunos[i].nome << " foi reprovado! \n\n";
+                                cout << "A media de " << alunos[i].nome << " e: " << mtzNotas[i][3] << "\n";
+                                if (mtzNotas[i][3] < 7)
+                                {
+                                    cout << alunos[i].nome << " foi reprovado! \n\n";
+                                }
+                                else
+                                {
+                                    cout << alunos[i].nome << " foi aprovado! \n\n";
+                                }
+                                system("pause");
                             }
-                            else
-                            {
-                                cout << alunos[i].nome << " foi aprovado! \n\n";
-                            }
-                            system("pause");
                         }
                     }
                     break;
@@ -346,26 +357,37 @@ int main()
                     if (pesquisaMatricula != -1)
                     {
                         cout << "Aluno(a):  " << alunos[pesquisaMatricula].nome << "\n";
+                        bool notaValida = false;
                         for (int c = 0; c < 3; c++)
                         {
                             cout << "Digite a nota AV" << c + 1 << ":  ";
                             cin >> AV;
-                            mtzNotas[pesquisaMatricula][c] = AV;
-                            mtzNotas[pesquisaMatricula][3] += AV;
-                        }
-                        mtzNotas[pesquisaMatricula][3] /= 3;
+                            notaValida = validarNota(notaValida, AV);
 
+                            if (notaValida == false)
+                            {
+                                mtzNotas[pesquisaMatricula][c] = AV;
+                                mtzNotas[pesquisaMatricula][3] += AV;
+                            }
+                        }
+                        system("pause");
+                        mtzNotas[pesquisaMatricula][3] /= 3;
                         cout << "A media de " << alunos[pesquisaMatricula].nome << " e: " << mtzNotas[pesquisaMatricula][3] << "\n";
                         if (mtzNotas[pesquisaMatricula][3] < 7)
                         {
-                            cout << alunos[pesquisaMatricula].nome << " foi reprovado! \n\n";
+                            system("cls");
+                            mostrarNotas(pesquisaMatricula);
+                            cout << alunos[pesquisaMatricula].nome << " foi reprovado com a media " << mtzNotas[pesquisaMatricula][3] << "\n\n";
                             system("pause");
                         }
                         else
                         {
-                            cout << alunos[pesquisaMatricula].nome << " foi aprovado! \n\n";
+                            system("cls");
+                            mostrarNotas(pesquisaMatricula);
+                            cout << alunos[pesquisaMatricula].nome << " foi aprovado com a media " << mtzNotas[pesquisaMatricula][3] << "\n\n";
                             system("pause");
                         }
+
                         break;
                     }
                     else
@@ -419,10 +441,7 @@ int main()
                             }
                             mtzNotas[pesquisaMatricula][3] /= 3;
 
-                            cout << "NOTAS: \n\n";
-                            cout << "AV1: " << mtzNotas[pesquisaMatricula][0] << "\n";
-                            cout << "AV2: " << mtzNotas[pesquisaMatricula][1] << "\n";
-                            cout << "AV3: " << mtzNotas[pesquisaMatricula][2] << "\n";
+                            mostrarNotas(pesquisaMatricula);
                             system("pause");
                         }
                     }
@@ -489,10 +508,8 @@ int main()
                                 }
                             }
 
-                            cout << "NOTAS: \n\n";
-                            cout << "AV1: " << mtzNotas[pesquisaMatricula][0] << "\n";
-                            cout << "AV2: " << mtzNotas[pesquisaMatricula][1] << "\n";
-                            cout << "AV3: " << mtzNotas[pesquisaMatricula][2] << "\n";
+                            mostrarNotas(pesquisaMatricula);
+
                             system("pause");
                         }
                     }
@@ -516,10 +533,8 @@ int main()
 
                     if (pesquisaMatricula != -1)
                     {
-                        cout << "NOTAS: \n\n";
-                        cout << "AV1: " << mtzNotas[pesquisaMatricula][0] << "\n";
-                        cout << "AV2: " << mtzNotas[pesquisaMatricula][1] << "\n";
-                        cout << "AV3: " << mtzNotas[pesquisaMatricula][2] << "\n";
+                        mostrarNotas(pesquisaMatricula);
+
                         system("pause");
                     }
 
@@ -546,13 +561,15 @@ int main()
                 case 1:
                 {
                     cout << "RELACAO DE ALUNOS APROVADOS\n\n";
-                    for (int i = 0; i < proximaPosicaoVagaNosVetores; i++)
+                    for (int i = 0; i <= proximaPosicaoVagaNosVetores; i++)
                     {
+                        bool aprovados = false;
                         if (mtzNotas[i][3] >= 7)
                         {
+                            aprovados = true;
                             cout << alunos[i].nome << " foi aprovado com a media " << mtzNotas[i][3] << endl;
                         }
-                        else
+                        else if (aprovados == false && i == proximaPosicaoVagaNosVetores)
                         {
                             cout << "Nenhum aluno foi aprovado\n\n";
                             break;
@@ -566,15 +583,17 @@ int main()
                 {
                     cout << "RELACAO DE ALUNOS REPROVADOS\n\n";
 
-                    for (int i = 0; i < proximaPosicaoVagaNosVetores; i++)
+                    for (int i = 0; i <= proximaPosicaoVagaNosVetores; i++)
                     {
+                        bool reprovados = false;
                         if (mtzNotas[i][3] < 7)
                         {
+                            reprovados = true;
                             cout << alunos[i].nome << " foi reprovado com a media " << mtzNotas[i][3] << endl;
                         }
-                        else
+                        else if (reprovados == false && i == proximaPosicaoVagaNosVetores)
                         {
-                            cout << "Nenhum aluno foi reprovado\n\n";
+                            cout << "Nenhum aluno foi aprovado\n\n";
                             break;
                         }
                     }
@@ -611,4 +630,25 @@ int pesquisarMatricula(int proximaPosicaoVagaNosVetores, int matricula)
         }
     }
     return -1;
+}
+
+bool validarNota(bool notaValida, int AV)
+{
+    if (AV < 0 || AV > 10)
+    {
+        cout << "Nota invalida!\n";
+        return notaValida = true;
+    }
+    else
+    {
+        return notaValida = false;
+    }
+}
+
+void mostrarNotas(int pesquisaMatricula)
+{
+    cout << "NOTAS: \n\n";
+    cout << "AV1: " << mtzNotas[pesquisaMatricula][0] << "\n";
+    cout << "AV2: " << mtzNotas[pesquisaMatricula][1] << "\n";
+    cout << "AV3: " << mtzNotas[pesquisaMatricula][2] << "\n";
 }
