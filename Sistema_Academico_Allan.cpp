@@ -12,6 +12,7 @@ using namespace std;
 int pesquisarMatricula(int proximaPosicaoVagaNosVetores, int matricula);
 bool validarNota(bool notaValida, int AV);
 void mostrarNotas(int pesquisaMatricula);
+float mediaNotas(double mtzNotas, double maiorNota, double segundaMaiorNota, int pesquisaMatricula);
 
 struct Alunos
 {
@@ -25,6 +26,9 @@ struct Alunos
 
 Alunos alunos[100];
 float mtzNotas[100][4]; // linha 0 -> AV1, linha 1 -> AV2, linha 2 -> AV3, linha 3 -> mediaFinal
+float AVMaiorNota;
+float AVSegundaMaiorNota;
+int posicaoMaiorNota;
 
 int main()
 {
@@ -37,9 +41,6 @@ int main()
     int posicaoLocalizada;
 
     int vetFaltas[100];
-    float AV1;
-    float AV2;
-    float AV3;
     float AV;
 
     int menu;
@@ -358,6 +359,8 @@ int main()
                     {
                         cout << "Aluno(a):  " << alunos[pesquisaMatricula].nome << "\n";
                         bool notaValida = false;
+                        AVMaiorNota = 0;
+                        AVSegundaMaiorNota = 0;
                         for (int c = 0; c < 3; c++)
                         {
                             cout << "Digite a nota AV" << c + 1 << ":  ";
@@ -366,12 +369,34 @@ int main()
 
                             if (notaValida == false)
                             {
-                                mtzNotas[pesquisaMatricula][c] = AV;
-                                mtzNotas[pesquisaMatricula][3] += AV;
+                                mtzNotas[pesquisaMatricula][c] = AV;                             
                             }
                         }
-                        system("pause");
-                        mtzNotas[pesquisaMatricula][3] /= 3;
+                   
+
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (mtzNotas[pesquisaMatricula][i] >= AVMaiorNota)
+                            {
+                                AVMaiorNota = mtzNotas[pesquisaMatricula][i];
+                                posicaoMaiorNota = i;
+                            }
+                        }
+
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (i != posicaoMaiorNota)
+                            {
+                                if (mtzNotas[pesquisaMatricula][i] > AVSegundaMaiorNota)
+                                {
+                                    AVSegundaMaiorNota = mtzNotas[pesquisaMatricula][i];
+                                }
+                            }
+                            
+                        }
+
+                        mtzNotas[pesquisaMatricula][3] = AVMaiorNota + AVSegundaMaiorNota;
+                        mtzNotas[pesquisaMatricula][3] /= 2;
                         cout << "A media de " << alunos[pesquisaMatricula].nome << " e: " << mtzNotas[pesquisaMatricula][3] << "\n";
                         if (mtzNotas[pesquisaMatricula][3] < 7)
                         {
@@ -439,6 +464,7 @@ int main()
                                 mtzNotas[pesquisaMatricula][c] = AV;
                                 mtzNotas[pesquisaMatricula][3] += AV;
                             }
+
                             mtzNotas[pesquisaMatricula][3] /= 3;
 
                             mostrarNotas(pesquisaMatricula);
