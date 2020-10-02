@@ -365,6 +365,11 @@ int main()
                         {
                             cout << "Digite a nota AV" << c + 1 << ":  ";
                             cin >> AV;
+                            if (AV <= 4)
+                            {
+                                AV = 0;
+                            }
+                            
                             notaValida = validarNota(notaValida, AV);
 
                             if (notaValida == false)
@@ -397,7 +402,6 @@ int main()
 
                         mtzNotas[pesquisaMatricula][3] = AVMaiorNota + AVSegundaMaiorNota;
                         mtzNotas[pesquisaMatricula][3] /= 2;
-                        cout << "A media de " << alunos[pesquisaMatricula].nome << " e: " << mtzNotas[pesquisaMatricula][3] << "\n";
                         if (mtzNotas[pesquisaMatricula][3] < 7)
                         {
                             system("cls");
