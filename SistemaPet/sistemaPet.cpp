@@ -52,18 +52,23 @@ Pet cadastrarPet(string nome, string porte, string especie,
                  char sexo, int idPet, int idDono, int idade, float peso,
                  int posicaoVagaDono, Donos *donos);
 int pesquisaIdPet(Pet *pets, int posicaoVagaPet, int idPet);
+void mostrarPets(int posicaoVagaPet, Pet *pets, Donos *donos, int idDono);
+
 
 int main()
 {
     Donos donos[100];
     Pet pets[100];
+    Cadastro cadastros[100];
 
     int menu;
     int subMenu;
     int posicaoVagaDono = 0;
     int posicaoVagaPets = 0;
+    int posicaoVagaCadastro = 0;
     int idDono = 1;
     int idPet = 1;
+    int idCadastro = 1;
     int pesquisaId;
     int pesquisaBemSucedida;
     string porte;
@@ -91,7 +96,7 @@ int main()
     pets[posicaoVagaPets].especie = "Ilhaza";
     pets[posicaoVagaPets].nome = "Bebel";
     pets[posicaoVagaPets].sexo = 'F';
-    pets[posicaoVagaPets].porte = "médio";
+    pets[posicaoVagaPets].porte = "medio";
     pets[posicaoVagaPets].idDono = 1;
     pets[posicaoVagaPets].idade = 7;
     pets[posicaoVagaPets].peso = 7;
@@ -108,6 +113,24 @@ int main()
     pets[posicaoVagaPets].peso = 13.5;
     idPet++;
     posicaoVagaPets++;
+
+    cadastros[posicaoVagaCadastro].dataHora = "06/10/2020 as 20:00";
+    cadastros[posicaoVagaCadastro].diagnostico = "Pet estava com verme";
+    cadastros[posicaoVagaCadastro].queixa = "Pet vomitando";
+    cadastros[posicaoVagaCadastro].idPet = 1;
+    cadastros[posicaoVagaCadastro].id = idCadastro;
+    cadastros[posicaoVagaCadastro].tratamento = "Tomar remedio para vermes";
+    idCadastro++;
+    posicaoVagaCadastro++;
+
+    cadastros[posicaoVagaCadastro].dataHora = "10/05/2019";
+    cadastros[posicaoVagaCadastro].diagnostico = "Pet quebrou a pata";
+    cadastros[posicaoVagaCadastro].queixa = "Pet com dor";
+    cadastros[posicaoVagaCadastro].idPet = 2;
+    cadastros[posicaoVagaCadastro].id = idCadastro;
+    cadastros[posicaoVagaCadastro].tratamento = "Engessar a pata";
+    idCadastro++;
+    posicaoVagaCadastro++;
 
     do
     {
@@ -296,13 +319,49 @@ int main()
 
             break;
         }
-        case 2:{
-            cout << "CONSULTAS\n\n";
+        case 2:
+        {
 
-            
+            do
+            {
+                system("cls");
+                cout << "CONSULTAS\n\n";
+                cout << "1. Consultar donos no sistema\n";
+                cout << "2. Consultar pets no sistema\n";
+                cout << "3. Mostrar relatorio do pet\n";
+                cout << "4. Mostrar todos os relatorios\n";
+                cout << "5. Alterar relatorio\n";
+                cout << "6. Excluir relatorio\n";
+                cout << "7. Retornar ao menu anterior\n";
+                cout << "   Digite uma opcao: \n";
+                cin >> subMenu;
 
+                switch (subMenu)
+                {
+                case 1:
+                {
+                    system("cls");
+                    cout << "CONSULTAR DONOS NO SISTEMA\n\n";
+
+                    mostrarDonos(posicaoVagaDono, donos);
+                    system("pause");
+
+                    break;
+                }
+                case 2: {
+                    system("cls");
+                    cout << "CONSULTAR PETS NO SISTEMA\n\n";
+
+                    mostrarPets(posicaoVagaPets,pets,donos, pesquisaId);
+                    system("pause");
+                    break;
+                }
+
+                break;
+                }
+
+            } while (subMenu != 7);
             break;
-            
         }
         break;
         }
@@ -410,6 +469,37 @@ void mostrarDonos(int posicaoVagaDono, Donos *donos)
             cout << "|" << donos[i].nome << "          |";
             cout << "   |   " << donos[i].id << "          |";
             cout << "     |" << donos[i].telefone << "      |" << endl;
+        }
+    }
+}
+
+void mostrarPets(int posicaoVagaPet, Pet *pets, Donos *donos, int idDono)
+{
+    system("cls");
+    cout << "DADOS DO DONO CADASTRADO:\n\n";
+    cout << " __________________   "
+            " ___________     "
+            "_______ "
+            "      _____________   "
+            " _______"
+            " _________________"
+         << endl;
+    cout << "|      NOME      |    |   DONO   |     |IDPET |    |   ESPECIE   |   | SEXO |   |  PESO   |   |  PORTE  |"
+         << "\n";
+
+    for (int i = 0; i < posicaoVagaPet; i++)
+
+    {
+        idDono = pets[i].idDono;
+        if (pets[i].id != 0)
+        {
+            cout << "|" << pets[i].nome << "          |";
+            cout << "    |   " << donos[idDono].nome << "   |";
+            cout << "      |  " << pets[i].id << " |";
+            cout << "     |   " << pets[i].especie << " |";
+            cout << "     |      " << pets[i].sexo << " |";
+            cout << "   | " << pets[i].peso << "  |";
+            cout << "     |" << pets[i].porte << "      |" << endl;
         }
     }
 }
